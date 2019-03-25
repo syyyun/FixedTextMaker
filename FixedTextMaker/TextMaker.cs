@@ -45,7 +45,9 @@ namespace FixedTextMaker
         {
             tabControlMain.TabPages.Clear();
             MyTextBox.Clear();
-            DefinedItems = LoadDefinedItems(@"FixedDefinitionXML.xml");
+            var dataFilePath = OpenFileDialogShow();
+            if (string.IsNullOrWhiteSpace(dataFilePath)) return;
+            DefinedItems = LoadDefinedItems(dataFilePath);
             MyTextDataAdapter = new TextDataAdapter(DefinedItems);
             MakeControls(DefinedItems);
         }
@@ -104,7 +106,7 @@ namespace FixedTextMaker
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.FileName = "DATAFILE";
             //ofd.InitialDirectory = @"C:\";
-            ofd.InitialDirectory = @"V:\temp\AGS\ファイル入力";
+            ofd.InitialDirectory = Environment.CurrentDirectory;
             ofd.Filter = "txt csv(*.txt;*.csv)|*.txt;*.csv|すべてのファイル(*.*)|*.*";
             ofd.FilterIndex = 2;
             ofd.Title = "開くファイルを選択してください";
@@ -138,9 +140,14 @@ namespace FixedTextMaker
         {
             int row, col;
             GetRowColIndex(MyTextBox, out row, out col);
-            toolStripStatusLabel1.Text = $"{row}行　{col}列";
+            NotificationStatus($"{row}行　{col}列");
             BindTab();
             ((Control)sender).Focus();
+        }
+
+        private void NotificationStatus(string message)
+        {
+            toolStripStatusLabel1.Text = message;
         }
 
         /// <summary>
@@ -175,16 +182,27 @@ namespace FixedTextMaker
             if (line.Length == 0)return;
 
             var key = MyTextDataAdapter.GetKey(line);
-            var record = MyTextDataAdapter.GetRecordKind(key);
-            tabControlMain.SelectTab(record.Name);
-
-            var labellTextList = tabControlMain.SelectedTab.Controls.OfType<Panel>().First()
-                .Controls.OfType<LabelText>();
-            foreach (var tb in labellTextList)
+            try
             {
-                if (tb.TextBox.Text == "\\r\\n")break;
-                tb.TextBox.Text = line.Substring(tb.StartIndex, tb.ItemLength);
+                var record = MyTextDataAdapter.GetRecordKind(key);
+                tabControlMain.SelectTab(record.Name);
+                var labellTextList = tabControlMain.SelectedTab.Controls.OfType<Panel>().First()
+                    .Controls.OfType<LabelText>();
+                foreach (var tb in labellTextList)
+                {
+                    if (tb.TextBox.Text == "\\r\\n") break;
+                    tb.TextBox.Text = line.Substring(tb.StartIndex, tb.ItemLength);
+                }
             }
+            catch (ArgumentException ex)
+            {
+                toolStripStatusLabel2.Text = ex.Message;
+            }
+            catch (Exception exAll)
+            {
+                toolStripStatusLabel2.Text = exAll.Message;
+            }
+
         }
 
         /// <summary>
@@ -231,6 +249,15 @@ namespace FixedTextMaker
             tabControlMain.SelectedTab = tabTemp;
             MyTextBox.SelectionChanged += richTextBox_SelectionChanged;
             MyTextBox.Focus();
+        }
+
+        private void TextMaker_Load(object sender, EventArgs e)
+        {
+            tabControlMain.TabPages.Clear();
+            MyTextBox.Clear();
+            DefinedItems = LoadDefinedItems(@"FixedDefinitionXML.xml");
+            MyTextDataAdapter = new TextDataAdapter(DefinedItems);
+            MakeControls(DefinedItems);
         }
     }
 }

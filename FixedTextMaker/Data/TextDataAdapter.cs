@@ -14,6 +14,7 @@ namespace FixedTextMaker.Data
     {
         private readonly FixedTextDefines TextDefines;
         private readonly List<string> DataRecords;
+        private readonly int KeyStart;
         private readonly int KeyLength;
         public bool HasCrLf { get; private set; }
 
@@ -24,16 +25,29 @@ namespace FixedTextMaker.Data
         public TextDataAdapter(FixedTextDefines defines) : this()
         {
             TextDefines = defines;
-            KeyLength = TextDefines.Records.First().Items.Where(v => v.Recognition).First().Length;
+            int start = 0;
+            KeyLength = 1;
+            bool hasKey = false;
+            foreach (var item in defines.Records.First().Items)
+            {
+                if (item.Recognition)
+                {
+                    KeyLength = item.Length;
+                    hasKey = true;
+                    break;
+                }
+                start += item.Length;
+            }
+            KeyStart = start;
+            if (!hasKey) KeyStart = 0;
         }
 
         public TextDataAdapter(FixedTextDefines defines, string dataText) : this(defines)
         {
-            TextDefines = defines;
             //TODO：テキストが挿入された状態と合わせなければならない、もしくはテキストボックス側を直計算する
             DataRecords = new List<string>();
             //最初の文字からレコード識別を読み込んで、内部情報として保持していく
-            KeyLength = TextDefines.Records.First().Items.Where(v => v.Recognition).First().Length;
+            KeyLength = TextDefines.Records.First().Items.FirstOrDefault(v => v.Recognition).Length;
 
             HasCrLf = dataText.IndexOf("\r\n") > 0;
             if (string.IsNullOrEmpty(dataText)) return;
@@ -110,7 +124,7 @@ namespace FixedTextMaker.Data
         public string GetKey( string line )
         {
             if (line.Length < KeyLength) return "";
-            return line.Substring(0, KeyLength);
+            return line.Substring(KeyStart, KeyLength);
         }
 
         /// <summary>

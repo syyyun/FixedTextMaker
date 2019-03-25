@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<fixedText>
+  <record name="OCRライン">
+    <item name="作業日" length="8" padchar=" " />
+    <item name="収納日" length="8" padchar=" " />
+    <item name="年度" length="2" padchar="0"/>
+    <item name="区分" length="1" padchar="0" fixedtext="2"/>
+    <item name="governmentCode" length="9" padchar="0"/>
+    <item name="kancyoSub" length="2" padchar="0"/>
+    <item name="cnTransferredNumber" length="6" padchar="0"/>
+    <item name="cnTransferredAmount" length="14" padchar="0"/>
+    <item name="年度" length="1" padchar="0"/>
+    <item name="スペース" length="149" padchar=" " />
+    <item name="CRLF" length="2" padchar="0" fixedtext="\r\n"/>
+  </record>
+</fixedText>
