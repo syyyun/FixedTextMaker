@@ -1,0 +1,10 @@
+C:\Users\t-takemura\documents\visual studio 2017\Projects\FixedTextMaker\FixedTextMaker\bin\Release\XML\FixedDefinitionXML.xml
+C:\Users\t-takemura\documents\visual studio 2017\Projects\FixedTextMaker\FixedTextMaker\bin\Release\FixedTextMaker.exe.config
+C:\Users\t-takemura\documents\visual studio 2017\Projects\FixedTextMaker\FixedTextMaker\bin\Release\FixedTextMaker.exe
+C:\Users\t-takemura\documents\visual studio 2017\Projects\FixedTextMaker\FixedTextMaker\bin\Release\FixedTextMaker.pdb
+C:\Users\t-takemura\documents\visual studio 2017\Projects\FixedTextMaker\FixedTextMaker\obj\Release\FixedTextMaker.CustomControls.LabelText.resources
+C:\Users\t-takemura\documents\visual studio 2017\Projects\FixedTextMaker\FixedTextMaker\obj\Release\FixedTextMaker.TextMaker.resources
+C:\Users\t-takemura\documents\visual studio 2017\Projects\FixedTextMaker\FixedTextMaker\obj\Release\FixedTextMaker.Properties.Resources.resources
+C:\Users\t-takemura\documents\visual studio 2017\Projects\FixedTextMaker\FixedTextMaker\obj\Release\FixedTextMaker.csproj.GenerateResource.Cache
+C:\Users\t-takemura\documents\visual studio 2017\Projects\FixedTextMaker\FixedTextMaker\obj\Release\FixedTextMaker.exe
+C:\Users\t-takemura\documents\visual studio 2017\Projects\FixedTextMaker\FixedTextMaker\obj\Release\FixedTextMaker.pdb
