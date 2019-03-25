@@ -170,6 +170,7 @@ namespace FixedTextMaker
         /// </summary>
         private void BindTab()
         {
+            if (MyTextDataAdapter == null) return;
             var line = GetSelectedLine();
             if (line.Length == 0)return;
 
@@ -215,6 +216,8 @@ namespace FixedTextMaker
 
         private void btnAddRow_Click(object sender, EventArgs e)
         {
+            MyTextBox.SelectionChanged -= richTextBox_SelectionChanged;
+            var tabTemp = tabControlMain.SelectedTab;
             var index = MyTextBox.GetFirstCharIndexOfCurrentLine();
             var insertText = GetSelectedTabsString();
             if ( ! MyTextDataAdapter.HasCrLf)
@@ -224,6 +227,9 @@ namespace FixedTextMaker
             var nextIndex = index + insertText.Length;
             MyTextBox.Text = MyTextBox.Text.Insert(index, insertText);
             MyTextBox.SelectionStart = nextIndex;
+
+            tabControlMain.SelectedTab = tabTemp;
+            MyTextBox.SelectionChanged += richTextBox_SelectionChanged;
             MyTextBox.Focus();
         }
     }

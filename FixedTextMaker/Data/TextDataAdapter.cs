@@ -17,14 +17,17 @@ namespace FixedTextMaker.Data
         private readonly int KeyLength;
         public bool HasCrLf { get; private set; }
 
-        private TextDataAdapter() { }
-
-        public TextDataAdapter(FixedTextDefines defines) : this(defines, "")
-        {
-            
+        private TextDataAdapter() {
+            HasCrLf = true;
         }
 
-        public TextDataAdapter(FixedTextDefines defines, string dataText)
+        public TextDataAdapter(FixedTextDefines defines) : this()
+        {
+            TextDefines = defines;
+            KeyLength = TextDefines.Records.First().Items.Where(v => v.Recognition).First().Length;
+        }
+
+        public TextDataAdapter(FixedTextDefines defines, string dataText) : this(defines)
         {
             TextDefines = defines;
             //TODO：テキストが挿入された状態と合わせなければならない、もしくはテキストボックス側を直計算する
